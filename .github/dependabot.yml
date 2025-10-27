@@ -1,0 +1,55 @@
+# Dependabot configuration for automated dependency updates
+# Note: Using "pip" ecosystem which supports pyproject.toml and works with uv.lock
+version: 2
+updates:
+  # Python dependencies (reads pyproject.toml, updates uv.lock)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    groups:
+      # Development dependencies (test/lint/format tools)
+      python-dev:
+        patterns:
+          - "pytest*"
+          - "mypy"
+          - "black"
+          - "ruff"
+          - "flake8"
+          - "freezegun"
+          - "aioresponses"
+        update-types:
+          - "minor"
+          - "patch"
+      # Production dependencies (runtime requirements)
+      python-prod:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "pytest*"
+          - "mypy"
+          - "black"
+          - "ruff"
+          - "flake8"
+          - "freezegun"
+          - "aioresponses"
+        update-types:
+          - "minor"
+          - "patch"
+    # Allow Dependabot to update uv.lock
+    # (pip ecosystem handles this automatically)
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
