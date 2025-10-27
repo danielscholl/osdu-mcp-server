@@ -112,14 +112,6 @@ See [Getting Started Guide](docs/getting-started.md) for detailed setup and conf
 
 See [Getting Started Guide](docs/getting-started.md#configuration) for complete configuration reference.
 
-## Documentation
-
-- **[Getting Started](docs/getting-started.md)** - Installation, authentication, configuration, and usage
-- **[Authentication Guide](docs/authentication.md)** - Detailed multi-cloud auth setup
-- **[Architecture Overview](docs/project-architect.md)** - System design and patterns
-- **[Architecture Decisions (ADRs)](docs/adr/README.md)** - Design rationale (29 documented decisions)
-- **[Contributing Guide](CONTRIBUTING.md)** - Development workflow and standards
-
 ## Contributing
 
 Contributions welcome! Quick start:
