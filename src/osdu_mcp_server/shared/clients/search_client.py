@@ -1,9 +1,10 @@
 """OSDU Search service client."""
 
-from typing import Dict, Any
+from typing import Any
+
+from ..logging_manager import get_logger
 from ..osdu_client import OsduClient
 from ..service_urls import OSMCPService, get_service_base_url
-from ..logging_manager import get_logger
 
 logger = get_logger(__name__)
 
@@ -16,7 +17,7 @@ class SearchClient(OsduClient):
         super().__init__(*args, **kwargs)
         self._base_path = get_service_base_url(OSMCPService.SEARCH)
 
-    async def post(self, path: str, data: Any = None, **kwargs: Any) -> Dict[str, Any]:
+    async def post(self, path: str, data: Any = None, **kwargs: Any) -> dict[str, Any]:
         """Override post to include service base path."""
         full_path = f"{self._base_path}{path}"
         if data is None and "json" in kwargs:
@@ -25,7 +26,7 @@ class SearchClient(OsduClient):
 
     async def search_query(
         self, query: str, kind: str = "*:*:*:*", limit: int = 50, offset: int = 0
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Execute general search query."""
         payload = {"kind": kind, "query": query, "limit": limit, "offset": offset}
 
@@ -42,7 +43,7 @@ class SearchClient(OsduClient):
         response = await self.post("/query", json=payload)
         return self._standardize_response(response, query)
 
-    async def search_by_id(self, record_id: str, limit: int = 10) -> Dict[str, Any]:
+    async def search_by_id(self, record_id: str, limit: int = 10) -> dict[str, Any]:
         """Execute ID-specific search."""
         query = f'id:("{record_id}")'
         payload = {"kind": "*:*:*:*", "query": query, "limit": limit}
@@ -57,7 +58,7 @@ class SearchClient(OsduClient):
 
     async def search_by_kind(
         self, kind: str, limit: int = 100, offset: int = 0
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Execute kind-specific search."""
         payload = {"kind": kind, "query": "", "limit": limit, "offset": offset}
 
@@ -70,8 +71,8 @@ class SearchClient(OsduClient):
         return self._standardize_response(response, f"kind:{kind}")
 
     def _standardize_response(
-        self, osdu_response: Dict[str, Any], query: str
-    ) -> Dict[str, Any]:
+        self, osdu_response: dict[str, Any], query: str
+    ) -> dict[str, Any]:
         """Convert OSDU Search API response to MCP format."""
         # Filter OSDU response to include only essential fields for AI consumption
         simplified_results = []

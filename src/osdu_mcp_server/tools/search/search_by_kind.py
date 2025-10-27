@@ -1,17 +1,17 @@
 """Find all records of specific type."""
 
-from typing import Dict, Any
+from typing import Any
 
+from ...shared.auth_handler import AuthHandler
 from ...shared.clients import SearchClient
 from ...shared.config_manager import ConfigManager
-from ...shared.auth_handler import AuthHandler
 from ...shared.exceptions import handle_osdu_exceptions
 
 
 @handle_osdu_exceptions
 async def search_by_kind(
     kind: str, limit: int = 100, offset: int = 0
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Find all records of specific type.
 
     Args:

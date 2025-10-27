@@ -1,17 +1,17 @@
 """Execute search queries using Elasticsearch syntax."""
 
-from typing import Dict, Any
+from typing import Any
 
+from ...shared.auth_handler import AuthHandler
 from ...shared.clients import SearchClient
 from ...shared.config_manager import ConfigManager
-from ...shared.auth_handler import AuthHandler
 from ...shared.exceptions import handle_osdu_exceptions
 
 
 @handle_osdu_exceptions
 async def search_query(
     query: str, kind: str = "*:*:*:*", limit: int = 50, offset: int = 0
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Execute search queries using Elasticsearch syntax.
 
     Args:

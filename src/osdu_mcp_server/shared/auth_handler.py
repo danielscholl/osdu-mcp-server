@@ -406,10 +406,7 @@ class AuthHandler:
 
             # Derive OAuth scope from client ID or custom scope
             custom_scope = os.environ.get("OSDU_MCP_AUTH_SCOPE")
-            if custom_scope:
-                scope = custom_scope
-            else:
-                scope = f"{client_id}/.default"
+            scope = custom_scope or f"{client_id}/.default"
 
             # Get new token
             self._azure_cached_token = self._azure_credential.get_token(scope)
