@@ -41,15 +41,19 @@ AI: ✅ Found 247 wells
 
 ## Quick Start
 
-### Installation
+### Setup
+
+[![Install with UV in VS Code](https://img.shields.io/badge/VS_Code-UV-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect?url=vscode:mcp/install?%7B%22name%22%3A%22osdu-mcp-server%22%2C%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22osdu-mcp-server%22%5D%2C%22env%22%3A%7B%22OSDU_MCP_SERVER_URL%22%3A%22%24%7Binput%3Aosdu_url%7D%22%2C%22OSDU_MCP_SERVER_DATA_PARTITION%22%3A%22%24%7Binput%3Adata_partition%7D%22%7D%2C%22inputs%22%3A%5B%7B%22id%22%3A%22osdu_url%22%2C%22type%22%3A%22promptString%22%2C%22description%22%3A%22OSDU%20Server%20URL%22%7D%2C%7B%22id%22%3A%22data_partition%22%2C%22type%22%3A%22promptString%22%2C%22description%22%3A%22Data%20Partition%20ID%22%7D%5D%7D)
 
 ```bash
-# Using Claude Code CLI (recommended)
 mcp add osdu-mcp-server -- uvx osdu-mcp-server \
   -e OSDU_MCP_SERVER_URL=https://your-osdu.com \
   -e OSDU_MCP_SERVER_DATA_PARTITION=opendes
+```
 
-# Or add to your MCP configuration
+Or add manually to your MCP configuration:
+
+```json
 {
   "mcpServers": {
     "osdu-mcp-server": {
@@ -64,9 +68,7 @@ mcp add osdu-mcp-server -- uvx osdu-mcp-server \
 }
 ```
 
-**Authentication** is auto-discovered from your environment (Azure CLI, AWS profiles, GCP gcloud).
-
-See [Getting Started Guide](docs/getting-started.md) for detailed setup and configuration.
+**Authentication** is auto-discovered from your environment (Azure CLI, AWS profiles, GCP gcloud). See [Getting Started](docs/getting-started.md) for detailed configuration.
 
 ### Try It
 
