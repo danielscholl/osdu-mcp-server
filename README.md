@@ -247,23 +247,19 @@ Working templates and reference examples to eliminate format-guessing errors:
 - **Audit Logging**: Structured JSON logs with operation tracing
 - **Sensitive Data**: Configurable handling for credentials and secrets
 
-## Development
+## Contributing
 
-Built with AI-driven development practices using Claude Code and GitHub Copilot. See our [Contributing Guide](CONTRIBUTING.md) for details on the development workflow.
+Contributions are welcome! See our [Contributing Guide](CONTRIBUTING.md) for development setup, coding standards, and submission guidelines.
 
+**Quick Start for Contributors:**
 ```bash
-# Local development setup
-uv sync
-uv pip install -e '.[dev]'
-
-# Run tests
-pytest
-
-# Code quality
-black .
-ruff check .
-mypy src/
+git clone https://github.com/your-username/osdu-mcp-server.git
+cd osdu-mcp-server
+uv sync && uv pip install -e '.[dev]'
+uv run pytest  # Verify setup
 ```
+
+Please review the [Contributing Guide](CONTRIBUTING.md) for detailed instructions on testing, code quality checks, and our commit message conventions.
 
 ## Documentation
 

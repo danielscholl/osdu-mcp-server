@@ -1,147 +1,290 @@
 # Contributing to OSDU MCP Server
 
-This project uses an AI-agent driven development workflow, combining automated coding with human oversight to ensure consistent, high-quality implementations.
+Thank you for your interest in contributing to the OSDU MCP Server! This guide will help you get started.
 
-> This AI-agent driven workflow ensures quality through structure, testing, architecture evaluation, and human oversight.
+## Getting Started
 
-## Core Principle
+### Prerequisites
 
-Architecture comes first. Specifications define behavior, ADRs capture decisions, and implementation follows. The defined workflow ensures that if each step is followed — from context loading to validation and documentation — code quality and test coverage become natural outcomes, not afterthoughts.
+- Python 3.12 or 3.13
+- [uv](https://docs.astral.sh/uv/) package manager
+- Git
+- Access to an OSDU platform instance (for testing)
 
-By adhering to this process, the AI avoids introducing technical debt and stays aligned with the bigger picture of the project. This disciplined approach ensures sustainable, high-quality contributions without sacrificing long-term maintainability.
+### Development Setup
 
-## Contribution Steps
+1. **Fork and clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/osdu-mcp-server.git
+   cd osdu-mcp-server
+   ```
 
-### 1. Issue Creation
+2. **Install dependencies:**
+   ```bash
+   uv sync
+   uv pip install -e '.[dev]'
+   ```
 
-In this AI-agent driven workflow, issue creation often starts with the AI analyzing user inputs or detecting functionality gaps. The AI refines these into a well-defined github issue, validating against existing specifications and architectural decisions.
+3. **Verify installation:**
+   ```bash
+   uv run pytest --version
+   uv run black --version
+   uv run ruff --version
+   uv run mypy --version
+   ```
 
-An issue documents the problem, proposed solution, and acceptance criteria, establishing a clear task definition before implementation. This ensures every change is traceable and aligned with project goals.
+## Development Workflow
 
-```bash
-gh issue create -t "Title" -d "Description" -l enhancement
-````
+### 1. Create an Issue
 
-### 2. Branch Creation
-
-Once an issue is established, the AI agent or developer proceeds to create a feature branch. This step keeps work organized and clearly associated with its issue.
-
-Branches follow a consistent naming pattern:
-
-```bash
-git checkout -b agent/<issue-number>-<short-description>
-```
-
-This ensures branches are traceable and easy to navigate during development and review.
-
-### 3. Context Loading
-
-Before starting implementation, the AI agent performs context loading to ensure it operates with full awareness of the project’s architectural guidelines and coding standards. This involves analyzing relevant ADRs, specifications, existing code patterns, and testing strategies.
-
-By fully loading this context, the AI can make informed decisions, maintain consistency with established practices, and integrate new features smoothly into the codebase.
-
-### 4. Implementation & Validation
-
-The AI agent implements new functionality guided by architectural patterns and specifications, using a test-driven development approach.
-
-Validation is an iterative loop where tests are created, executed, and used to refine both the code and tests themselves. This process continues until the desired behavior is consistently verified.
-
-Validation focuses on behavior-driven tests (ADR-010) with a strict minimum of 80% coverage. This ensures correctness, closes the feedback loop, and confirms adherence to project standards.
-
-### 5. Architecture & Documentation Validation
-
-After successful implementation and validation, the AI agent reassesses the project's architecture and design decisions. This evaluation determines whether the work has introduced changes that impact existing ADRs, requires new architectural decisions, or subtly evolves current patterns.
-
-This step ensures ADRs and specifications remain accurate, living documents that grow with the code. By closing this loop, the AI keeps documentation aligned with the evolving system, preserving architectural clarity and supporting sustainable development.
-
-#### Updating AI_EVOLUTION.md
-
-When completing significant features or architectural changes, update AI_EVOLUTION.md with:
-- The challenge that was solved
-- Key insights or patterns discovered
-- Lessons learned for future development
-- Evolution of existing patterns
-
-This creates a knowledge base that helps future AI agents understand not just what exists, but why it exists.
-
-### 6. Merge Request
-
-After validation and documentation updates, the AI agent prepares a Merge Request (MR) to propose integrating changes into the main branch.
-
-The MR links back to the issue, summarizes the work, and confirms tests pass. Commit messages follow Conventional Commits for Release Please automation.
-
-Example commit:
+Before starting work, create an issue describing:
+- The problem you're solving or feature you're adding
+- Proposed approach
+- Expected behavior
 
 ```bash
-git commit -m "fix(auth): correct token expiration handling"
+gh issue create -t "Title" -b "Description" -l "enhancement"
 ```
 
-Example MR creation:
+### 2. Create a Feature Branch
 
 ```bash
-gh mr create -t "Fix token expiration" -d "Closes #42: Corrects token expiration logic." --target-branch main
+git checkout -b feature/issue-number-short-description
 ```
 
-Commit messages follow the Conventional Commits format for compatibility with Release Please automation. Human reviewers approve and merge, ensuring oversight and architectural consistency.
+Branch naming conventions:
+- `feature/` - New features
+- `fix/` - Bug fixes
+- `docs/` - Documentation updates
+- `refactor/` - Code refactoring
 
-### 7. Session Logging
+### 3. Make Your Changes
 
-At the end of each development cycle, the AI agent records a session log to capture essential context from the work performed. This log summarizes key decisions, technical challenges, architectural impacts, and lessons learned.
+Follow these guidelines:
 
-Session logs serve as an evolving memory for ongoing workstreams, enabling the AI to 'remember' past activities, maintain continuity across phases, and provide rich context when revisiting or expanding on larger features and epics.
+- **Code Style**: Code is automatically formatted with `black` and linted with `ruff`
+- **Type Hints**: Add type hints for all function signatures
+- **Documentation**: Update docstrings and relevant docs
+- **Tests**: Add tests for new functionality (see Testing section)
 
-By preserving this knowledge, session logs ensure the AI stays aligned with project goals and maintains situational awareness throughout long-running initiatives.
+### 4. Run Quality Checks
 
-## Working with GitHub Copilot Coding Agent
+Before committing, run all quality checks:
 
-This project is optimized for collaboration with GitHub Copilot coding agent. To assign tasks to Copilot:
+```bash
+# Format code
+uv run black src/ tests/
 
-1. **Create Well-Scoped Issues**: Use the "Copilot Task" issue template
-2. **Apply the 'copilot' Label**: This automatically assigns the issue to @Copilot
-3. **Clear Acceptance Criteria**: Define exactly what success looks like
-4. **Reference Patterns**: Point to existing code patterns to follow
-5. **Specify Files**: List which files need modification
+# Lint code
+uv run ruff check src/ tests/
 
-Copilot will:
-- Follow the patterns defined in `.github/copilot-instructions.md`
-- Use the pre-configured development environment
-- Run quality checks before creating pull requests
-- Respond to review comments for iterations
+# Type check
+uv run mypy src/
 
-Best tasks for Copilot:
-- Adding new tools following existing patterns
-- Improving test coverage
-- Fixing type errors or lint issues
-- Updating documentation
-- Small, well-defined features
-
-Avoid assigning Copilot:
-- Major architectural changes
-- Security-critical modifications
-- Complex cross-service refactoring
-- Ambiguous or exploratory tasks
-
-## Development Workflow Overview
-
-```mermaid
-graph TB
-    A[Identify Feature/Issue] --> B[Create github Issue]
-    B --> C["Load Context (ADRs, Specs, Patterns)"]
-    C --> D[Create Feature Branch]
-    D --> E[AI Agent Implementation]
-    E --> F[Run Tests & Iterate]
-    F --> G{Validation Passed?}
-    G -->|No| E
-    G -->|Yes| H[Architecture & Documentation Validation]
-    H --> I{Architecture Changed?}
-    I -->|Yes| J[Update ADRs & Specs]
-    I -->|No| K[Update Supporting Documentation]
-    J --> K
-    K --> L[Create Merge Request]
-    L --> M["Session Logging (Context Capture)"]
-    M --> N[Review & Merge]
-
-    style A fill:#f9f,stroke:#333,stroke-width:4px
-    style N fill:#9f9,stroke:#333,stroke-width:4px
-    style H fill:#ff9,stroke:#333,stroke-width:2px
+# Run tests with coverage
+uv run pytest --cov=src/osdu_mcp_server --cov-report=term-missing --cov-fail-under=70
 ```
+
+All checks must pass before submitting a PR.
+
+### 5. Commit Your Changes
+
+We use [Conventional Commits](https://www.conventionalcommits.org/) for automatic versioning:
+
+```bash
+# Format: <type>(<scope>): <description>
+
+git commit -m "feat(storage): add record versioning support"
+git commit -m "fix(auth): resolve token expiration handling"
+git commit -m "docs: update authentication guide"
+```
+
+**Commit Types:**
+- `feat:` - New features (minor version bump)
+- `fix:` - Bug fixes (patch version bump)
+- `feat!:` or `BREAKING CHANGE:` - Breaking changes (major version bump)
+- `docs:` - Documentation only
+- `test:` - Test additions or updates
+- `refactor:` - Code refactoring
+- `chore:` - Maintenance tasks
+
+### 6. Create a Pull Request
+
+```bash
+git push origin feature/issue-number-short-description
+gh pr create --title "feat: Add new feature" --body "Closes #123"
+```
+
+**PR Checklist:**
+- [ ] Tests pass locally
+- [ ] Code coverage meets 70% threshold
+- [ ] Type checking passes
+- [ ] Code formatted with black
+- [ ] Commit messages follow Conventional Commits
+- [ ] Documentation updated (if needed)
+- [ ] CHANGELOG.md updated (automatic via release-please)
+
+## Testing
+
+### Writing Tests
+
+We use behavior-driven testing (see [ADR-010](docs/adr/010-testing-philosophy-and-strategy.md)):
+
+```python
+# tests/tools/storage/test_my_feature.py
+import pytest
+from aioresponses import aioresponses
+
+@pytest.mark.asyncio
+async def test_feature_handles_error_gracefully():
+    """Test that the feature gracefully handles API errors."""
+
+    with aioresponses() as mocked:
+        # Mock external service behavior
+        mocked.get("https://osdu.com/api/storage/v2/records/123", status=404)
+
+        result = await my_feature("123")
+
+        # Verify behavior - what the user sees
+        assert result["status"] == "not_found"
+        assert "does not exist" in result["message"]
+```
+
+**Testing Guidelines:**
+- Test behaviors, not implementation details
+- Mock at service boundaries only (HTTP, auth providers)
+- Each test should be self-documenting
+- Aim for 70%+ coverage, 90%+ for new features
+
+### Running Tests
+
+```bash
+# Run all tests
+uv run pytest
+
+# Run specific test file
+uv run pytest tests/tools/storage/test_get_record.py
+
+# Run with coverage
+uv run pytest --cov=src/osdu_mcp_server --cov-report=html
+
+# Run tests matching a pattern
+uv run pytest -k "test_auth"
+```
+
+## Architecture and Design
+
+### Architecture Decision Records (ADRs)
+
+This project uses ADRs to document architectural decisions. See [docs/adr/](docs/adr/) for all decisions.
+
+**Before making significant changes:**
+1. Review relevant ADRs to understand design rationale
+2. If your change conflicts with an ADR, discuss in an issue first
+3. Major architectural changes may require a new ADR
+
+Key ADRs to review:
+- [ADR-007: Tool Implementation Pattern](docs/adr/007-tool-implementation-pattern.md)
+- [ADR-010: Testing Philosophy](docs/adr/010-testing-philosophy-and-strategy.md)
+- [ADR-020: Write Protection](docs/adr/020-unified-write-protection.md)
+
+### Project Structure
+
+```
+src/osdu_mcp_server/
+├── main.py              # Entry point
+├── server.py            # FastMCP server registration
+├── shared/              # Shared utilities
+│   ├── auth_handler.py  # Authentication
+│   ├── config_manager.py # Configuration
+│   └── clients/         # Service-specific API clients
+├── tools/               # MCP tool implementations
+│   ├── storage/         # Storage service tools
+│   ├── search/          # Search service tools
+│   └── ...
+├── prompts/             # MCP prompts
+└── resources/           # Templates and references
+
+tests/                   # Mirrors src/ structure
+```
+
+## Adding New Features
+
+### Adding a New Tool
+
+1. **Create tool module** in appropriate service directory:
+   ```python
+   # src/osdu_mcp_server/tools/storage/my_tool.py
+   from osdu_mcp_server.shared.exceptions import handle_osdu_exceptions
+
+   @handle_osdu_exceptions
+   async def storage_my_tool(param: str) -> dict:
+       """
+       Brief description of what the tool does.
+
+       Args:
+           param: Description of parameter
+
+       Returns:
+           Description of return value
+       """
+       # Implementation
+   ```
+
+2. **Register in server.py:**
+   ```python
+   from .tools.storage import storage_my_tool
+   mcp.tool()(storage_my_tool)  # type: ignore[arg-type]
+   ```
+
+3. **Add tests:**
+   ```python
+   # tests/tools/storage/test_my_tool.py
+   @pytest.mark.asyncio
+   async def test_my_tool_success():
+       """Test successful execution."""
+       # Test implementation
+   ```
+
+4. **Update documentation** if needed
+
+## Code Review Process
+
+1. **Automated Checks**: CI runs tests, linting, type checking
+2. **Security Scans**: CodeQL and dependency scans
+3. **Manual Review**: Maintainers review code and architecture
+4. **Approval**: At least one maintainer approval required
+5. **Merge**: Squash and merge with conventional commit message
+
+## Release Process
+
+Releases are automated using Release Please:
+
+1. Merge commits to `main` using Conventional Commits
+2. Release Please creates/updates a release PR
+3. Merge the release PR to publish to PyPI
+4. GitHub release is created automatically
+
+## Getting Help
+
+- **Documentation**: Check [docs/](docs/) directory
+- **Issues**: Search existing issues or create a new one
+- **Discussions**: Use GitHub Discussions for questions
+
+## Code of Conduct
+
+Be respectful and inclusive. We're all here to build great software together.
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the Apache License 2.0.
+
+---
+
+## Additional Resources
+
+- **[Architecture Overview](docs/project-architect.md)** - System design and patterns
+- **[ADRs](docs/adr/README.md)** - All architectural decisions
+- **[Authentication Guide](docs/authentication.md)** - Detailed auth setup
+
+**Note:** This project was built with AI assistance (Claude Code and GitHub Copilot). While AI tools helped with development, all contributions follow the same standards regardless of how they were created.
