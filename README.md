@@ -112,18 +112,6 @@ See [Getting Started Guide](docs/getting-started.md) for detailed setup and conf
 
 See [Getting Started Guide](docs/getting-started.md#configuration) for complete configuration reference.
 
-## Contributing
-
-Contributions welcome! Quick start:
-
-```bash
-git clone https://github.com/danielscholl/osdu-mcp-server.git
-cd osdu-mcp-server
-uv sync && uv pip install -e '.[dev]'
-uv run pytest
-```
-
-See [Contributing Guide](CONTRIBUTING.md) for detailed instructions.
 
 ## License
 
