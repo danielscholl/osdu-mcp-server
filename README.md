@@ -89,23 +89,23 @@ Or add manually to your MCP configuration:
 ## What's Included
 
 **31 Tools** across 6 OSDU services:
-- **Core**: `health_check`, `entitlements_mine`
-- **Partition**: `list`, `get`, `create`, `update`, `delete`
-- **Legal**: `list`, `get`, `search`, `batch_retrieve`, `create`, `update`, `delete`, `get_properties`
-- **Schema**: `list`, `get`, `search`, `create`, `update`
-- **Search**: `query`, `by_id`, `by_kind`
-- **Storage**: `get_record`, `create_update_records`, `delete_record`, `purge_record`, `fetch_records`, `list_versions`, `get_version`, `query_by_kind`
+- **Core** - Health checks and user entitlements
+- **Partition** - List, get, create, update, and delete partitions
+- **Legal** - Complete legal tag management with search and batch operations
+- **Schema** - Schema discovery, search, and management
+- **Search** - Elasticsearch queries and record discovery
+- **Storage** - Full CRUD operations with versioning and batch support
 
 **3 Prompts** for guided workflows:
-- `list_mcp_assets` - Capability overview
-- `guide_search_patterns` - Search best practices
-- `guide_record_lifecycle` - Complete workflows
+- Capability overview and quick start
+- Search pattern guidance with Elasticsearch examples
+- Complete record lifecycle workflows
 
 **4 Resources** with working templates:
-- `legal-tag-template` - Ready-to-use legal tag structure
-- `processing-parameter-record` - Sample OSDU record
-- `acl-format-examples` - ACL patterns for different deployments
-- `search-query-patterns` - Common Elasticsearch queries
+- Legal tag templates
+- Record structure examples
+- ACL format patterns
+- Search query patterns
 
 ## Configuration
 
