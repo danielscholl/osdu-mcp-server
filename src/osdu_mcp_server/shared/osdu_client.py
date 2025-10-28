@@ -124,12 +124,12 @@ class OsduClient:
         """
         return await self._make_request("GET", path, **kwargs)
 
-    async def post(self, path: str, data: Any, **kwargs: Any) -> dict[str, Any]:
+    async def post(self, path: str, data: Any = None, **kwargs: Any) -> dict[str, Any]:
         """POST request with retry logic.
 
         Args:
             path: API path
-            data: Request body data
+            data: Request body data (optional)
             **kwargs: Additional request parameters
 
         Returns:

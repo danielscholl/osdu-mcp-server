@@ -127,6 +127,7 @@ class AuthHandler:
                 logger.info("Authentication mode: AWS (auto-discovered)")
                 return AuthenticationMode.AWS
         except Exception:
+            # AWS SDK not installed or credentials not available - continue to next method
             pass
 
         # Priority 6: Try GCP auto-discovery
@@ -138,6 +139,7 @@ class AuthHandler:
                 logger.info("Authentication mode: GCP (auto-discovered)")
                 return AuthenticationMode.GCP
         except Exception:
+            # GCP SDK not installed or credentials not available - continue
             pass
 
         # Priority 7: No credentials found
