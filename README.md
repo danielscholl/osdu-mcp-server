@@ -32,12 +32,14 @@ AI: ✅ Found 247 wells
 
 ## Key Features
 
-- **Natural Language Interface** - Complex API calls and Elasticsearch queries through conversation
-- **Multi-Cloud Authentication** - Azure, AWS, and GCP with zero-config credential discovery
-- **31 MCP Tools** - Complete OSDU API coverage (storage, search, schema, legal, partition)
-- **Template-Driven** - Pre-built templates eliminate format-guessing errors
-- **Safety Controls** - Write/delete protection, confirmation requirements, audit logging
-- **MCP Resources & Prompts** - Guided workflows and interactive examples
+| Feature | Description |
+|---------|-------------|
+| **Natural Language** | Complex API calls and Elasticsearch queries through conversation |
+| **Multi-Cloud Auth** | Azure, AWS, and GCP with zero-config credential discovery |
+| **31 MCP Tools** | Complete OSDU API coverage (storage, search, schema, legal, partition) |
+| **Template-Driven** | Pre-built templates eliminate format-guessing errors |
+| **Safety Controls** | Write/delete protection, confirmation requirements, audit logging |
+| **Resources & Prompts** | Guided workflows and interactive examples |
 
 ## Quick Start
 
@@ -59,7 +61,6 @@ Or add manually to your MCP configuration:
 {
   "mcpServers": {
     "osdu-mcp-server": {
-      "type": "stdio",
       "command": "uvx",
       "args": ["osdu-mcp-server"],
       "env": {
