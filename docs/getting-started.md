@@ -72,24 +72,19 @@ uv pip install osdu-mcp-server
 
 ## Authentication
 
-The OSDU MCP Server supports **multi-cloud authentication** with automatic provider detection.
-
-### Authentication Priority
-
-The server automatically detects your authentication provider in this order:
-
-1. **Manual Token** (highest priority) - `OSDU_MCP_USER_TOKEN`
-2. **Azure** - `AZURE_CLIENT_ID` or `AZURE_TENANT_ID`
-3. **AWS** (explicit) - `AWS_ACCESS_KEY_ID` or `AWS_PROFILE`
-4. **GCP** (explicit) - `GOOGLE_APPLICATION_CREDENTIALS`
-5. **AWS** (auto-discovery) - IAM roles, SSO
-6. **GCP** (auto-discovery) - gcloud, metadata service
+The OSDU MCP Server supports **multi-cloud authentication** with automatic provider detection. This guide covers Azure authentication (the most common scenario). For AWS, GCP, and other advanced authentication scenarios, see the [Authentication Guide](authentication.md).
 
 ### Azure Authentication
 
-#### Azure CLI (Development)
+Azure is the primary cloud provider for most OSDU deployments. The server uses Azure's `DefaultAzureCredential` which automatically tries multiple authentication methods.
 
-**Best for:** Local development
+#### Method 1: Azure CLI (Development)
+
+**Best for:** Local development on developer workstations
+
+**Setup:**
+1. Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+2. Run `az login` to authenticate
 
 ```bash
 # Login with Azure CLI
@@ -115,9 +110,14 @@ mcp add osdu-mcp-server -- uvx osdu-mcp-server \
 3. Add client ID: `04b07795-8ddb-461a-bbee-02f9e1bf7b46` (Azure CLI)
 4. Select `user_impersonation` scope
 
-#### Service Principal (Production)
+**Verify Authentication:**
+```bash
+az account get-access-token --resource YOUR_AZURE_CLIENT_ID
+```
 
-**Best for:** CI/CD, automated processes
+#### Method 2: Service Principal (Production)
+
+**Best for:** CI/CD pipelines, automated processes, production deployments
 
 ```bash
 mcp add osdu-mcp-server -- uvx osdu-mcp-server \
@@ -128,9 +128,9 @@ mcp add osdu-mcp-server -- uvx osdu-mcp-server \
   -e AZURE_TENANT_ID=your-tenant-id
 ```
 
-#### Managed Identity (Azure Hosting)
+#### Method 3: Managed Identity (Azure Hosting)
 
-**Best for:** Azure VM, App Service, Container Apps, AKS
+**Best for:** Applications running in Azure (VM, App Service, Container Apps, AKS)
 
 No credentials needed - automatically discovered from Azure environment.
 
@@ -142,73 +142,12 @@ export AZURE_CLIENT_ID=your-osdu-app-id
 export AZURE_TENANT_ID=your-tenant-id
 ```
 
-### AWS Authentication
+### Other Cloud Providers
 
-#### AWS SSO (Development)
-
-```bash
-aws sso login --profile dev
-
-mcp add osdu-mcp-server -- uvx osdu-mcp-server \
-  -e OSDU_MCP_SERVER_URL=https://your-osdu.com \
-  -e OSDU_MCP_SERVER_DATA_PARTITION=opendes \
-  -e AWS_PROFILE=dev
-```
-
-#### Access Keys (Production)
-
-```bash
-mcp add osdu-mcp-server -- uvx osdu-mcp-server \
-  -e OSDU_MCP_SERVER_URL=https://your-osdu.com \
-  -e OSDU_MCP_SERVER_DATA_PARTITION=opendes \
-  -e AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE \
-  -e AWS_SECRET_ACCESS_KEY=your-secret-key \
-  -e AWS_REGION=us-east-1
-```
-
-#### IAM Roles (EC2/ECS/Lambda)
-
-No credentials needed - automatically discovered from IAM role.
-
-### GCP Authentication
-
-#### gcloud CLI (Development)
-
-```bash
-gcloud auth application-default login
-
-mcp add osdu-mcp-server -- uvx osdu-mcp-server \
-  -e OSDU_MCP_SERVER_URL=https://your-osdu.com \
-  -e OSDU_MCP_SERVER_DATA_PARTITION=opendes
-```
-
-#### Service Account (Production)
-
-```bash
-mcp add osdu-mcp-server -- uvx osdu-mcp-server \
-  -e OSDU_MCP_SERVER_URL=https://your-osdu.com \
-  -e OSDU_MCP_SERVER_DATA_PARTITION=opendes \
-  -e GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
-```
-
-#### Workload Identity (GKE)
-
-No credentials needed - automatically discovered from Workload Identity.
-
-### Manual OAuth Token
-
-For custom OAuth providers or manual token management:
-
-```bash
-export OSDU_MCP_USER_TOKEN="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
-```
-
-**Token Requirements:**
-- Valid JWT format
-- Not expired
-- Server warns if expires within 5 minutes
-
-For detailed authentication troubleshooting, see [Authentication Guide](authentication.md).
+For **AWS** and **GCP** authentication methods, see the [Authentication Guide](authentication.md):
+- AWS: SSO, Access Keys, IAM Roles
+- GCP: gcloud, Service Accounts, Workload Identity
+- Manual OAuth tokens for custom providers
 
 ## Configuration
 
