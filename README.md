@@ -89,12 +89,12 @@ Or add manually to your MCP configuration:
 ## What's Included
 
 **31 Tools** across 6 OSDU services:
-- Core: `health_check`, `entitlements_mine`
-- Partition: List, get, create, update, delete
-- Legal: CRUD operations, search, batch retrieval
-- Schema: Discovery, validation, CRUD
-- Search: Query, find by ID/kind
-- Storage: CRUD, versioning, batch operations
+- **Core**: `health_check`, `entitlements_mine`
+- **Partition**: `list`, `get`, `create`, `update`, `delete`
+- **Legal**: `list`, `get`, `search`, `batch_retrieve`, `create`, `update`, `delete`, `get_properties`
+- **Schema**: `list`, `get`, `search`, `create`, `update`
+- **Search**: `query`, `by_id`, `by_kind`
+- **Storage**: `get_record`, `create_update_records`, `delete_record`, `purge_record`, `fetch_records`, `list_versions`, `get_version`, `query_by_kind`
 
 **3 Prompts** for guided workflows:
 - `list_mcp_assets` - Capability overview
@@ -102,10 +102,10 @@ Or add manually to your MCP configuration:
 - `guide_record_lifecycle` - Complete workflows
 
 **4 Resources** with working templates:
-- Legal tag templates
-- Record examples
-- ACL format patterns
-- Search query examples
+- `legal-tag-template` - Ready-to-use legal tag structure
+- `processing-parameter-record` - Sample OSDU record
+- `acl-format-examples` - ACL patterns for different deployments
+- `search-query-patterns` - Common Elasticsearch queries
 
 ## Configuration
 
