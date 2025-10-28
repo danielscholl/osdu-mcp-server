@@ -118,8 +118,6 @@ Or add manually to your MCP configuration:
 - `OSDU_MCP_ENABLE_WRITE_MODE` - Enable create/update (default: `false`)
 - `OSDU_MCP_ENABLE_DELETE_MODE` - Enable delete/purge (default: `false`)
 
-See [Getting Started Guide](docs/getting-started.md#configuration) for complete configuration reference.
-
 
 ## License
 
