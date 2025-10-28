@@ -48,7 +48,9 @@ AI: ✅ Found 247 wells
 ```bash
 mcp add osdu-mcp-server -- uvx osdu-mcp-server \
   -e OSDU_MCP_SERVER_URL=https://your-osdu.com \
-  -e OSDU_MCP_SERVER_DATA_PARTITION=opendes
+  -e OSDU_MCP_SERVER_DATA_PARTITION=opendes \
+  -e AZURE_CLIENT_ID=your-client-id \
+  -e AZURE_TENANT_ID=your-tenant-id
 ```
 
 Or add manually to your MCP configuration:
@@ -57,18 +59,21 @@ Or add manually to your MCP configuration:
 {
   "mcpServers": {
     "osdu-mcp-server": {
+      "type": "stdio",
       "command": "uvx",
       "args": ["osdu-mcp-server"],
       "env": {
         "OSDU_MCP_SERVER_URL": "https://your-osdu.com",
-        "OSDU_MCP_SERVER_DATA_PARTITION": "opendes"
+        "OSDU_MCP_SERVER_DATA_PARTITION": "opendes",
+        "AZURE_CLIENT_ID": "your-client-id",
+        "AZURE_TENANT_ID": "your-tenant-id"
       }
     }
   }
 }
 ```
 
-**Authentication** is auto-discovered from your environment (Azure CLI, AWS profiles, GCP gcloud). See [Getting Started](docs/getting-started.md) for detailed configuration.
+**Note:** Authentication credentials (Azure/AWS/GCP) are auto-discovered from your environment. See [Getting Started](docs/getting-started.md) for all auth methods.
 
 ### Try It
 
