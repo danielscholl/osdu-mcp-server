@@ -22,7 +22,7 @@ jobs:
         python-version: ["3.12", "3.13"]
         
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v6
@@ -83,7 +83,7 @@ jobs:
         
     # Save test artifacts on failure
     - name: Upload test artifacts
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       if: failure() && steps.pytest.outcome == 'failure'
       with:
         name: test-artifacts-py${{ matrix.python-version }}
